@@ -1,0 +1,16 @@
+# EDA Tool Logs & Temporary Files
+*.log
+*.vcd
+*.jou
+*.pb
+*.append
+_stacktrace.json
+.openlane/
+build/
+runs/
+
+# Environment
+.venv/
+__pycache__/
+.nix-node/
+result
