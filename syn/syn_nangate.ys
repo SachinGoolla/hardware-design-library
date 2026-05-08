@@ -1,0 +1,10 @@
+read_verilog -sv rtl/adder_parameterized.sv
+hierarchy -top adder_parameterized
+synth -top adder_parameterized
+
+# Use absolute path to the liberty file
+abc -liberty /home/dada/pdks/nangate45/libs.ref/liberty/NangateOpenCellLibrary_typical.lib -D 1000
+
+clean
+stat -liberty /home/dada/pdks/nangate45/libs.ref/liberty/NangateOpenCellLibrary_typical.lib
+write_verilog syn/outputs/adder_parameterized_gates.v

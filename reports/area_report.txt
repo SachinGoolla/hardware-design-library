@@ -1,0 +1,1 @@
+   Chip area for module '\adder_parameterized': 195.776000

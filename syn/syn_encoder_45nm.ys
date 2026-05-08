@@ -1,0 +1,23 @@
+# --- 16-to-4 Priority Encoder Synthesis (Nangate 45nm) ---
+
+# 1. Read RTL
+read_verilog -sv rtl/priority_encoder_16to4.sv
+
+# 2. Elaborate and Optimize
+hierarchy -check -top priority_encoder_16to4
+proc; opt; fsm; opt; memory; opt
+
+# 3. Map to Generic Gates
+techmap; opt
+
+# 4. Map to Nangate 45nm Standard Cells
+# Using the path relative to the project root
+abc -liberty lib/NangateOpenCellLibrary_typical.lib
+opt; clean
+
+# 5. Output Management (The fix is right here)
+exec -- mkdir -p outputs
+write_verilog outputs/priority_encoder_16to4_45nm.v
+
+# 6. Gate Statistics
+stat -liberty lib/NangateOpenCellLibrary_typical.lib

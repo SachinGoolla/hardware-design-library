@@ -1,0 +1,14 @@
+[options]
+mode bmc
+depth 1
+timeout 10
+
+[engines]
+smtbmc z3
+
+[script]
+read_verilog -sv -formal priority_encoder_16to4.sv
+prep -top priority_encoder_16to4
+
+[files]
+../rtl/priority_encoder_16to4.sv

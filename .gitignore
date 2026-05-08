@@ -14,3 +14,12 @@ runs/
 __pycache__/
 .nix-node/
 result
+
+# Verilator & Build Artifacts
+obj_dir/
+sim_build/
+formal/*/
+!formal/*.sby
+results.xml
+*.dat
+outputs/

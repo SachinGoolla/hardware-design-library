@@ -1,0 +1,1 @@
+genhtml logs/coverage.info --output-directory logs/html_report

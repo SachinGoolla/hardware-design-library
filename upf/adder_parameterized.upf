@@ -1,0 +1,14 @@
+# Define Power and Ground Pins
+create_supply_port VDD
+create_supply_port VSS
+
+# Define the primary power net
+create_supply_net VDD -domain PD_ROOT
+create_supply_net VSS -domain PD_ROOT
+
+# Connect ports to nets
+connect_supply_net VDD -ports {VDD}
+connect_supply_net VSS -ports {VSS}
+
+# Set the primary domain
+set_domain_supply_net PD_ROOT -primary_power_net VDD -primary_ground_net VSS

@@ -6,21 +6,25 @@ module adder_cla_32b (
     output logic        cout_o
 );
 
-    // Generate and Propagate signals
     logic [31:0] g, p;
+    
+    // Suppressing UNOPTFLAT (Optimization) and ALWCOMBORDER (Execution Order)
+    // because this is a legitimate carry-chain dependency.
+    /* verilator lint_off UNOPTFLAT */
+    /* verilator lint_off ALWCOMBORDER */
     logic [32:0] c;
+    /* verilator lint_on UNOPTFLAT */
+    /* verilator lint_on ALWCOMBORDER */
 
     assign g = a_i & b_i;
     assign p = a_i ^ b_i;
 
-    // Carry Lookahead Logic (Simplified for readability, usually expanded into a tree)
-    assign c[0] = cin_i;
-    genvar i;
-    generate
-        for (i = 0; i < 32; i = i + 1) begin : carry_gen
-            assign c[i+1] = g[i] | (p[i] & c[i]);
+    always_comb begin
+        c[0] = cin_i;
+        for (int i = 0; i < 32; i++) begin
+            c[i+1] = g[i] | (p[i] & c[i]);
         end
-    endgenerate
+    end
 
     assign sum_o  = p ^ c[31:0];
     assign cout_o = c[32];

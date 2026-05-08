@@ -1,0 +1,9 @@
+5. Executing LTP pass (find longest path).
+
+Longest topological path in priority_encoder_16to4 (length=5):
+    0: \data_i [14]
+    1: $abc$175$new_n22_ (via $abc$175$auto$blifparse.cc:386:parse_blif$176)
+    2: $abc$175$new_n23_ (via $abc$175$auto$blifparse.cc:386:parse_blif$177)
+    3: $abc$175$new_n29_ (via $abc$175$auto$blifparse.cc:386:parse_blif$183)
+    4: $abc$175$new_n35_ (via $abc$175$auto$blifparse.cc:386:parse_blif$189)
+    5: \id_o [0] (via $abc$175$auto$blifparse.cc:386:parse_blif$196)

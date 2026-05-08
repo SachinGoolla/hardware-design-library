@@ -1,0 +1,13 @@
+[options]
+mode prove
+
+[engines]
+smtbmc z3
+
+[script]
+read -sv adder_parameterized.sv
+prep -top adder_parameterized
+
+[files]
+# Point directly to the RTL file relative to this .sby file
+../rtl/adder_parameterized.sv
