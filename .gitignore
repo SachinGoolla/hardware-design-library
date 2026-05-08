@@ -23,3 +23,15 @@ formal/*/
 results.xml
 *.dat
 outputs/
+
+# Block everything Verilator and Cocotb create
+obj_dir/
+sim_build/
+__pycache__/
+*.vcd
+*.log
+*.dat
+results.xml
+*.append
+*.jou
+*.pb
