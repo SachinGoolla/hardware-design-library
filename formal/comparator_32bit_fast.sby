@@ -1,0 +1,12 @@
+[options]
+mode prove
+
+[engines]
+smtbmc z3
+
+[script]
+read -sv comparator_32bit_fast.sv
+prep -top comparator_32bit_fast
+
+[files]
+../rtl/comparator_32bit_fast.sv
