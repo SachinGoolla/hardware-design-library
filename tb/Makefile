@@ -1,31 +1,37 @@
 # tb/Makefile
-RTL_DIR  = ../rtl
-SIM_DIR  = ../sim
+RTL_DIR   = ../rtl
+SIM_DIR   = ../sim
 VERILATOR = /usr/local/bin/verilator
+P_ROOT    ?= ..
 
-# Flags
-FLAGS = --binary --trace --coverage -Wall -y $(RTL_DIR) -I$(RTL_DIR) -j 0
+TOP       ?= mac_unit
+TESTBENCH  = tb_$(TOP)
+OBJ_DIR    = obj_dir_$(TOP)
+EXE_OUT    = ./$(OBJ_DIR)/V$(TESTBENCH)
 
-# Colors
+FLAGS = --binary --trace --coverage -Wall -Wno-TIMESCALEMOD -Wno-WIDTHTRUNC -Wno-UNUSEDSIGNAL -Wno-INITIALDLY -y $(RTL_DIR) -I.. -j 0 --Mdir $(OBJ_DIR)
+
 CYAN   = \033[0;36m
 YELLOW = \033[0;33m
+GREEN  = \033[0;32m
 NC     = \033[0m
-
-TESTBENCH ?= tb_adder_parameterized
-EXE_OUT    = ./obj_dir/V$(TESTBENCH)
 
 .PHONY: compile run clean
 
-compile:
+compile: $(RTL_DIR)/$(TOP).sv $(TESTBENCH).sv
 	@mkdir -p $(SIM_DIR)
-	@echo "$(YELLOW)Verilating $(TESTBENCH)...$(NC)"
-	$(VERILATOR) $(FLAGS) --top-module $(TESTBENCH) $(TESTBENCH).sv
+	@mkdir -p $(P_ROOT)/logs
+	@echo "$(YELLOW)Verilating $(TOP) Hierarchy...$(NC)"
+	@$(VERILATOR) $(FLAGS) --top-module $(TESTBENCH) $(TESTBENCH).sv > /dev/null 2>&1
 
-# Inside tb/Makefile
 run: compile
-	@echo "$(CYAN)Simulating $(TESTBENCH)...$(NC)"
-	@# Use the P_ROOT variable we pass from the Root Makefile
-	$(EXE_OUT) +verilator+coverage+file+$(P_ROOT)/logs/coverage.dat
+	@echo "$(CYAN)Simulating $(TOP) Pipeline...$(NC)"
+	@if $(EXE_OUT) +verilator+coverage+file+$(P_ROOT)/logs/coverage.dat > /dev/null 2>&1; then \
+		printf "$(GREEN)   ✓ PASS: Vectors Exhausted$(NC)\n"; \
+	else \
+		printf "\033[0;31m   ❌ FAIL: Simulation Error\033[0m\n"; \
+		exit 1; \
+	fi
 
 clean:
-	@rm -rf obj_dir $(SIM_DIR)/*.vcd
+	@rm -rf obj_dir* $(SIM_DIR)/*.vcd

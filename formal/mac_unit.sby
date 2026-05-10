@@ -1,0 +1,18 @@
+[tasks]
+proof
+
+[options]
+proof: mode bmc
+proof: depth 8
+
+[engines]
+smtbmc z3
+
+[script]
+# Injecting -DFORMAL explicitly so the parser ignores the include path
+read_verilog -DFORMAL -sv mac_unit.sv adder_ksa_32bit.sv
+prep -top mac_unit
+
+[files]
+../rtl/mac_unit.sv
+../rtl/adder_ksa_32bit.sv

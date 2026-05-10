@@ -23,7 +23,6 @@ module comparator_32bit_fast (
 
     // Final Stage: Priority Merge (Optimized for Tool Reachability)
     assign eq_o = &nibble_eq;
-
     always_comb begin
         casez (nibble_eq)
             8'b0???????: gt_o = nibble_gt[7]; 

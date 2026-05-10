@@ -8,9 +8,14 @@ _stacktrace.json
 .openlane/
 build/
 runs/
+results.xml
+.openlane/
+*.dat
 
 # Environment
+venv/
 .venv/
+obj_dir*/
 __pycache__/
 .nix-node/
 result
@@ -35,3 +40,25 @@ results.xml
 *.append
 *.jou
 *.pb
+
+# C++ Build Artifacts (Verilator/GCC)
+*.o
+*.d
+*.mk
+*.gch
+*.a
+
+# Module-specific Verilator folders (Wildcard)
+obj_dir*/
+sim_build*/
+formal/*/
+
+# Folders to Ignore but keep local
+sim/
+reports/
+syn/reports/
+logs/
+
+# Formal Verification
+formal/*/
+!formal/*.sby

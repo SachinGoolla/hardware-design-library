@@ -1,0 +1,18 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "PILLARS: Silicon Sign-off",
+            "type": "shell",
+            "command": "source .venv/bin/activate && make all TOP=${fileBasenameNoExtension} EXTRA_ARGS='--trace'",
+            "group": { "kind": "build", "isDefault": true },
+            "presentation": { "reveal": "always", "panel": "shared", "clear": true }
+        },
+        {
+            "label": "STA: Smart Timing Check",
+            "type": "shell",
+            "command": "source .venv/bin/activate && yosys -p 'read_verilog -sv rtl/${fileBasenameNoExtension}.sv; synth -top ${fileBasenameNoExtension}; dfflibmap -liberty lib/NangateOpenCellLibrary_typical.lib; abc -liberty lib/NangateOpenCellLibrary_typical.lib; clean; write_verilog outputs/${fileBasenameNoExtension}_netlist.v' && export TOP_MODULE=${fileBasenameNoExtension} && sta sta/run_sta.tcl",
+            "presentation": { "reveal": "always", "panel": "shared" }
+        }
+    ]
+}

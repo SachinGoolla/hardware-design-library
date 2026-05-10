@@ -1,0 +1,81 @@
+{
+  "extensionVersion": "1.5.2",
+  "fileName": "/home/dada/hardware-design-library/tb/dump.vcd",
+  "markerTime": 375,
+  "altMarkerTime": null,
+  "displayTimeUnit": "ps",
+  "selectedSignal": {
+    "name": "tb_comparator_32bit_fast.gt_o",
+    "msb": -1,
+    "lsb": -1
+  },
+  "zoomRatio": 0.2,
+  "scrollLeft": 0,
+  "displayedSignals": [
+    {
+      "dataType": "netlist-variable",
+      "netlistId": 0,
+      "name": "tb_comparator_32bit_fast.a_i",
+      "numberFormat": "hexadecimal",
+      "colorIndex": 0,
+      "rowHeight": 1,
+      "verticalScale": 1,
+      "nameType": "fullPath",
+      "customName": "a_i",
+      "renderType": "multiBit",
+      "valueLinkCommand": ""
+    },
+    {
+      "dataType": "netlist-variable",
+      "netlistId": 1,
+      "name": "tb_comparator_32bit_fast.b_i",
+      "numberFormat": "hexadecimal",
+      "colorIndex": 0,
+      "rowHeight": 1,
+      "verticalScale": 1,
+      "nameType": "fullPath",
+      "customName": "b_i",
+      "renderType": "multiBit",
+      "valueLinkCommand": ""
+    },
+    {
+      "dataType": "netlist-variable",
+      "netlistId": 3,
+      "name": "tb_comparator_32bit_fast.eq_o",
+      "numberFormat": "binary",
+      "colorIndex": 0,
+      "rowHeight": 1,
+      "verticalScale": 1,
+      "nameType": "fullPath",
+      "customName": "eq_o",
+      "renderType": "binary",
+      "valueLinkCommand": ""
+    },
+    {
+      "dataType": "netlist-variable",
+      "netlistId": 2,
+      "name": "tb_comparator_32bit_fast.gt_o",
+      "numberFormat": "binary",
+      "colorIndex": 0,
+      "rowHeight": 1,
+      "verticalScale": 1,
+      "nameType": "fullPath",
+      "customName": "gt_o",
+      "renderType": "binary",
+      "valueLinkCommand": ""
+    },
+    {
+      "dataType": "netlist-variable",
+      "netlistId": 4,
+      "name": "tb_comparator_32bit_fast.lt_o",
+      "numberFormat": "binary",
+      "colorIndex": 0,
+      "rowHeight": 1,
+      "verticalScale": 1,
+      "nameType": "fullPath",
+      "customName": "lt_o",
+      "renderType": "binary",
+      "valueLinkCommand": ""
+    }
+  ]
+}

@@ -55,36 +55,9 @@ sim: check
 		echo "$(YELLOW)  ⚠ SKIPPED: NO SYSTEMVERILOG TESTBENCH.$(NC)"; \
 	fi
 
-coverage: check
-	@echo "$(CYAN)PILLAR 5: Generating Final Coverage Dashboard [$(TOP)]...$(NC)"
-	@if [ ! -f logs/coverage.dat ]; then \
-		echo "$(RED)  ❌ ERROR: NO DATA GENERATED. RUN 'make sim' FIRST.$(NC)"; exit 1; \
-	fi
-	@verilator_coverage --write-info logs/coverage.info logs/coverage.dat > /dev/null 2>&1
-	@sed -i "s|SF:.*$(TOP).sv|SF:$(P_ROOT)/rtl/$(TOP).sv|g" logs/coverage.info
-	@TOTAL=$$(lcov --summary logs/coverage.info 2>/dev/null | grep "lines......" | cut -d'(' -f2 | cut -d' ' -f3); \
-	HITS=$$(lcov --summary logs/coverage.info 2>/dev/null | grep "lines......" | cut -d'(' -f2 | cut -d' ' -f1); \
-	PERC=$$(echo "scale=1; ($$HITS/$$TOTAL)*100" | bc); \
-	BAR=$$(echo "($$HITS*20)/$$TOTAL" | bc); \
-	echo ""; \
-	echo "   $(YELLOW)FINAL SIGN-OFF REPORT: $(TOP)$(NC)"; \
-	echo "   =============================================="; \
-	echo "   TOTAL LINES : $$TOTAL"; \
-	echo "   LINES HIT   : $$HITS"; \
-	echo "   FINAL SCORE : $$PERC%"; \
-	printf "   PROGRESS    : ["; \
-	for i in $$(seq 1 $$BAR); do printf "$(GREEN)█$(NC)"; done; \
-	for i in $$(seq 1 $$(expr 20 - $$BAR)); do printf "░"; done; \
-	printf "] $$PERC%%\n"; \
-	echo "   =============================================="; \
-	if [ $$(echo "$$PERC >= 90" | bc) -eq 1 ]; then \
-		echo "   $(GREEN)STATUS: SILICON SIGN-OFF APPROVED ✅$(NC)"; \
-	else \
-		echo "   $(RED)STATUS: COVERAGE HOLES DETECTED ❌$(NC)"; \
-	fi; \
-	echo ""; \
-	genhtml logs/coverage.info --output-directory logs/html_report --ignore-errors source,unsupported,unmapped > /dev/null 2>&1
-
+coverage:
+	@echo "PILLAR 5: Generating Final Coverage Dashboard [$(TOP)]..."
+	@.venv/bin/python3 tb/coverage_pie.py $(TOP)
 clean:
 	@echo "$(CYAN)Cleaning build artifacts...$(NC)"
 	@rm -rf logs formal/$(TOP) verification/cocotb/sim_build verification/cocotb/__pycache__

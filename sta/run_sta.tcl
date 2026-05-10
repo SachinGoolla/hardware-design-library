@@ -1,16 +1,16 @@
-# 1. Load the Nangate 45nm Timing Models
-read_liberty $::env(HOME)/pdks/nangate45/libs.ref/liberty/NangateOpenCellLibrary_typical.lib
+# AGNOSTIC STA SCRIPT
+set TOP_MODULE $env(TOP_MODULE)
 
-# 2. Read the Synthesized Gate-Level Netlist
-read_verilog syn/outputs/adder_parameterized_gates.v
+read_liberty lib/NangateOpenCellLibrary_typical.lib
+read_verilog outputs/${TOP_MODULE}_netlist.v
+link_design ${TOP_MODULE}
 
-# 3. Define the Top Module
-link_design adder_parameterized
-
-# 4. Apply the Timing Constraints (The 1.0ns deadline)
-read_sdc constraints/adder_parameterized.sdc
+create_clock -name clk -period 0.332
+set_input_delay 0.050 -clock clk [all_inputs]
+set_output_delay 0.050 -clock clk [all_outputs]
 
 # 5. Report the Worst Case Timing Paths
 report_checks -path_delay max -format full_clock_expanded
+report_worst_slack -max
 report_tns
 report_wns
